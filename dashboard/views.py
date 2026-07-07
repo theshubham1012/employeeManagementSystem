@@ -38,6 +38,7 @@ def deleteEmployee(request, pk):
     return redirect('all-employees')
 
 #---------------------------------------#####  Client related views   #####--------------------------------------#
+
 def addClient(request):
     if request.method=='POST':
         form = ClientForm(request.POST)
@@ -47,14 +48,57 @@ def addClient(request):
     form = ClientForm()
     return render(request,'add_client.html',{'form':form})
 
+def editClient(request, pk):
+    client = get_object_or_404(Client, pk=pk)
+    if request.method=='POST':
+        form = ClientForm(request.POST, instance=client)
+        if form.is_valid():
+            form.save()
+            return redirect('all-clients')
+    form = ClientForm(instance=client)
+    context={
+        'form':form,
+        'client':client,
+    }
+    return render(request, 'edit-client.html', context)
+
+def deleteClient(request, pk):
+    client = get_object_or_404(Client, pk-pk)
+    client.delete()
+    return redirect('all-clients')
+
+
+#---------------------------------------#####  Site related views   #####--------------------------------------#
+
 def addSite(request):
     if request.method=='POST':
         form = SiteForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('addSite')
+        return redirect('all-sites')
     form = SiteForm()
     return render(request, 'add-site.html',{'form':form,})
+
+def editSite(request, pk):
+    site = get_object_or_404(Site, pk=pk)
+    if request.method=='POST':
+        form = SiteForm(request.POST, instance=site)
+        if form.is_valid():
+            form.save()
+            return redirect('all-sites')
+    form = SiteForm(instance=site)
+    context={
+        'form':form,
+        'site':site,
+    }
+    return render(request, 'edit-site.html', context)
+
+def deleteSite(request, pk):
+    site = get_object_or_404(Site, pk=pk)
+    site.delete()
+    return redirect('all-sites')
+
+#---------------------------------------#####  Designation related views   #####--------------------------------------#
 
 def addDesignation(request):
     if request.method=='POST':
@@ -66,8 +110,9 @@ def addDesignation(request):
     form = DesignationForm()
     return render(request, 'add-designation.html', {'form':form})
 
+
 #---------------------------------------#####  Attendance related views   #####--------------------------------------#
-def markAttendance(request):
+def updateAttendance(request):
     employees = Employee.objects.all()
 
     if request.method == 'POST':
@@ -75,12 +120,11 @@ def markAttendance(request):
         if form.is_valid():
             for employee in employees:
                 field_name = f'attendance_{employee.pk}'
-                attendance_value = form.cleaned_data.get(field_name, 0)
-                Salary.objects.update_or_create(
-                    employeeID=employee,
-                    defaults={'attendance': attendance_value},
-                )
-            return redirect('home')
+                attendance_value = form.cleaned_data.get(field_name, 0) or 0
+                salary_record, created = Salary.objects.get_or_create(employeeID=employee) 
+                salary_record.attendance = attendance_value 
+                salary_record.save()
+            return redirect('all-employees-salary')
     else:
         form = BulkAttendanceForm(employees=employees)
 
@@ -92,3 +136,22 @@ def markAttendance(request):
 def allEmployees(request):
     employees = Employee.objects.all()
     return render(request, 'sheets/all_employees.html',{'employees':employees})
+
+def allEmployeesSalary(request):
+    employees = Employee.objects.all()
+    return render(request,'sheets/salary.html',{'employees':employees})
+
+def salarySlips(request):
+    employees = Employee.objects.all()
+    return render(request, 'sheets/salary-slips.html',{'employee':employees})
+
+def allClients(request):
+    clients = Client.objects.all()
+    return render(request, 'sheets/all-clients.html', {'clients':clients})
+
+def allSites(request):
+    clients = Client.objects.all().prefetch_related('sites')
+    context = {
+        'clients': clients,
+    }
+    return render(request, 'sheets/all_site.html', context)

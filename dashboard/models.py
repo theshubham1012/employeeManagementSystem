@@ -45,15 +45,17 @@ class Designation(models.Model):
 
 
 class Salary(models.Model):
-    employeeID = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    employeeID = models.OneToOneField(Employee, on_delete=models.CASCADE)
     attendance = models.IntegerField()
-    claculatedBasic = models.FloatField(editable=False, default=0.0)
-    calculatedHRA = models.FloatField(editable=False, default=0.0)
-    calculatedAllowance = models.FloatField(editable=False, default=0.0)
-    calculatedPF = models.FloatField(editable=False, default=0.0)
-    calculatedESI = models.FloatField(editable=False, default=0.0)
-    netPay = models.FloatField(editable=False, default=0.0)
-    monthDays = models.IntegerField(default=1)
+    monthDays = models.IntegerField(default=30)
+    claculatedBasic = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
+    calculatedHRA = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
+    calculatedAllowance = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
+    totalA = models.IntegerField(default=0)
+    calculatedPF = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
+    calculatedESI = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
+    deductions = models.IntegerField(default=0)
+    netPay = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
 
     def save(self, *args, **kwargs):
         employee = self.employeeID  # actual Employee instance
@@ -65,13 +67,13 @@ class Salary(models.Model):
         self.claculatedBasic = (monthlyBasic / 26) * self.attendance
         self.calculatedHRA = (monthlyHRA / 26) * self.attendance
         self.calculatedAllowance = (monthlyAllowance / 26) * self.attendance
-        self.calculatedPF = monthlyBasic * 12 / 100
-        self.calculatedESI = monthlyBasic * 9 / 100
-
+        self.totalA = self.claculatedBasic + self.calculatedHRA + self.calculatedAllowance
+        self.calculatedPF = self.claculatedBasic * 12 / 100
+        self.calculatedESI = self.claculatedBasic * 9 / 100
+        self.deductions = self.calculatedPF + self.calculatedESI
         # PF/ESI as deductions — flip the sign here if you actually want them added
         self.netPay = (
-            self.claculatedBasic + self.calculatedHRA + self.calculatedAllowance
-            - self.calculatedPF - self.calculatedESI
+            self.totalA - self.deductions
         )
 
         super().save(*args, **kwargs)

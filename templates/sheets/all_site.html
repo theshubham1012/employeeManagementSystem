@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clients with Sites</title>
+</head>
+<body>
+    <h2>All Clients Data</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Site Names</th>
+                <th colspan='2'>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            {% if client.sites.all %}
+            {% for site in client.sites.all %}
+            <tr>
+                <td>{{ client.clientName }}</td>
+                <td>{{ site.siteName }}</td>
+                <td><a href="{% url "delete-site" site.id %}">Delete</a></td>
+                <td><a href="{% url "edit-site" site.id %}">Edit</a></td>
+            </tr>  
+            {% endfor %}
+            {% else %}
+            <tr><td>No sites added</td></tr>
+            {% endif %}
+            {% empty %}
+            <tr>
+                <td colspan="2">No clients found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
