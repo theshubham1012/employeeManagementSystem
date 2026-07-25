@@ -23,6 +23,7 @@
                 <th>PAN</th>
                 <th>UAN</th>
                 <th>ESI</th>
+                <th colspan="2">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +41,8 @@
                 <td>{{ employee.pan }}</td>
                 <td>{{ employee.uan}}</td>
                 <td>{{ employee.esi}}</td>
+                <td><a href="{% url "edit-employee" employee.employeeID %}">Edit</a></td>
+                <td><a href="{% url "delete-employee" employee.employeeID %}">Delete</a></td>
             </tr>
             {% empty %}
             <tr>

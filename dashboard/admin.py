@@ -3,7 +3,7 @@ from .models import Employee, Client, Site, Designation, Salary
 
 class SalaryAdmin(admin.ModelAdmin):
     readonly_fields = [
-        'claculatedBasic',
+        'calculatedBasic',
         'calculatedHRA',
         'calculatedAllowance',
         'calculatedPF',
@@ -14,7 +14,7 @@ class SalaryAdmin(admin.ModelAdmin):
         'employeeID',
         'attendance',
         'monthDays',
-        'claculatedBasic',
+        'calculatedBasic',
         'calculatedHRA',
         'calculatedAllowance',
         'calculatedPF',
@@ -24,7 +24,7 @@ class SalaryAdmin(admin.ModelAdmin):
     list_display = [
         'employeeID',
         'monthDays',
-        'claculatedBasic',
+        'calculatedBasic',
         'calculatedHRA',
         'calculatedAllowance',
         'calculatedPF',

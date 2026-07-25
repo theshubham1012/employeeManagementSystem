@@ -13,6 +13,7 @@
                 <th>Client Name</th>
                 <th>Client Address</th>
                 <th>GSTIN</th>
+                <th colspan='2'>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,8 @@
                 <td>{{ client.clientName }}</td>
                 <td>{{ client.clientAddress }}</td>
                 <td>{{ client.clientGstin }}</td>
+                <td><a href="{% url "delete-client" client.id %}">Delete</a></td>
+                <td><a href="{% url "edit-client" client.id %}">Edit</a></td>
             </tr>  
             {% empty %}
             <tr>

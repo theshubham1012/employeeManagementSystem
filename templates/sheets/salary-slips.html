@@ -6,18 +6,79 @@
     <title>Document</title>
 </head>
 <body>
+    {% for employee in employees %}
     <div>
         <h2>Company Name</h2>
         <div>
             <p>Address: Street 32 Jaipur Rajasthan</p>
             <p>----------- Pay Slip ----------------------------------------------------</p>
         </div>
-        <table>
+        <table  border="2">
             <tr>
-                <td>Employee Name: {{ employee.employeeName }}</td>
-                <td>Employee ID : {{ employee.employeeID }}</td>
+                <td>Employee Name</td>
+                <td colspan="2">{{ employee.employeeName }}</td>
+                <td>Employee ID</td>
+                <td>{{ employee.employeeID }}</td>
+            </tr>
+            <tr>
+                <td>Client Name</td>
+                <td colspan="2">{{ employee.siteName.clientName }}</td>
+                <td>Site Name</td>
+                <td>{{ employee.siteName }}</td>
+            </tr>
+            <tr>
+                <td>Designation</td>
+                <td colspan="2">{{ employee.designation }}</td>
+                <td>PAN</td>
+                <td>{{ employee.pan }}</td>
+            </tr>
+            <tr>
+                <td>Month Days</td>
+                <td colspan="2">{{ employee.salary.monthDays }}</td>
+                <td>Working Days</td>
+                <td>{{employee.salary.attendance}}</td>
+            </tr>
+            <tr>
+                <td colspan="3">Earned</td>
+                <td colspan="2">Deductions</td>
+            </tr>
+            <tr>
+                <td>Basic</td>
+                <td>{{ employee.designation.monthlyBasic }}</td>
+                <td>{{ employee.salary.calculatedBasic }}</td>
+                <td>PF</td>
+                <td>{{ employee.salary.calculatedPF }}</td>
+            </tr>
+            <tr>
+                <td>Allowance</td>
+                <td>{{ employee.designation.monthlyAllowance }}</td>
+                <td>{{ employee.salary.calculatedAllowance }}</td>
+                <td>ESI</td>
+                <td>{{ employee.salary.calculatedESI }}</td>
+            </tr>
+            <tr>
+                <td>HRA</td>
+                <td>{{ employee.designation.monthlyHRA }}</td>
+                <td>{{ employee.salary.calculatedHRA }}</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">Total</td>
+                <td>{{ employee.salary.totalA }}</td>
+                <td>Deductions</td>
+                <td>{{ employee.salary.deductions }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">Net Pay</td>
+                <td>{{ employee.salary.netPay }}</td>
             </tr>
         </table>
+        <div>
+            <p>Salary has been transferred to employee A/C No.{{ employee.account }} IFSC {{ employee.accountIFSC }}.</p>
+        </div>
     </div>
+    {% endfor %}
+
 </body>
 </html>

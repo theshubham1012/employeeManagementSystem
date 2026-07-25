@@ -110,6 +110,20 @@ def addDesignation(request):
     form = DesignationForm()
     return render(request, 'add-designation.html', {'form':form})
 
+def editDesignation(request, pk):
+    designation = get_object_or_404(Designation, pk=pk)
+    if request.method == 'POST':
+        form = DesignationForm(request.POST, instance=designation)
+        if form.is_valid():
+            form.save()
+        #return redirect('')
+    form = DesignationForm(instance=designation)
+    return render(request, 'edit-designation.html', {'form':form})
+
+def deleteDesignation(request, pk):
+    designation = get_object_or_404(Designation, pk=pk)
+    designation.delete()
+
 
 #---------------------------------------#####  Attendance related views   #####--------------------------------------#
 def updateAttendance(request):
@@ -143,13 +157,37 @@ def allEmployeesSalary(request):
 
 def salarySlips(request):
     employees = Employee.objects.all()
-    return render(request, 'sheets/salary-slips.html',{'employee':employees})
+    designations = Designation.objects.all()
+    salaries = Salary.objects.all()
+    context = {
+        'employees':employees,
+        'designations' : designations,
+        'salaries' : salaries
+    }
+    return render(request, 'sheets/salary-slips.html',context)
 
 def allClients(request):
     clients = Client.objects.all()
     return render(request, 'sheets/all-clients.html', {'clients':clients})
 
 def allSites(request):
+    clients = Client.objects.all().prefetch_related('sites')
+    context = {
+        'clients': clients,
+    }
+    return render(request, 'sheets/all_site.html', context)
+
+
+#------------------------------ Editable Sheets ------------------------------------
+def editAllEmployees(request):
+    employees = Employee.objects.all()
+    return render(request, 'editableSheets/all_employees.html',{'employees':employees})
+
+def editAllClients(request):
+    clients = Client.objects.all()
+    return render(request, 'sheets/all-clients.html', {'clients':clients})
+
+def editAllSites(request):
     clients = Client.objects.all().prefetch_related('sites')
     context = {
         'clients': clients,

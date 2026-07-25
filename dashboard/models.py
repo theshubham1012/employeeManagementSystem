@@ -48,7 +48,7 @@ class Salary(models.Model):
     employeeID = models.OneToOneField(Employee, on_delete=models.CASCADE)
     attendance = models.IntegerField()
     monthDays = models.IntegerField(default=30)
-    claculatedBasic = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
+    calculatedBasic = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
     calculatedHRA = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
     calculatedAllowance = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
     totalA = models.IntegerField(default=0)
@@ -64,12 +64,12 @@ class Salary(models.Model):
         monthlyHRA = designation.monthlyHRA
         monthlyAllowance = designation.monthlyAllowance
 
-        self.claculatedBasic = (monthlyBasic / 26) * self.attendance
+        self.calculatedBasic = (monthlyBasic / 26) * self.attendance
         self.calculatedHRA = (monthlyHRA / 26) * self.attendance
         self.calculatedAllowance = (monthlyAllowance / 26) * self.attendance
-        self.totalA = self.claculatedBasic + self.calculatedHRA + self.calculatedAllowance
-        self.calculatedPF = self.claculatedBasic * 12 / 100
-        self.calculatedESI = self.claculatedBasic * 9 / 100
+        self.totalA = self.calculatedBasic + self.calculatedHRA + self.calculatedAllowance
+        self.calculatedPF = self.calculatedBasic * 12 / 100
+        self.calculatedESI = self.calculatedBasic * 9 / 100
         self.deductions = self.calculatedPF + self.calculatedESI
         # PF/ESI as deductions — flip the sign here if you actually want them added
         self.netPay = (

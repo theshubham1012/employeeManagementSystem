@@ -22,6 +22,8 @@ urlpatterns=[
 
     #designation urls
     path('add-designation/',views.addDesignation, name='add-designation'),
+    path('edit-designation/<int:pk>/', views.editDesignation, name='edit-designation'),
+    path('delete-designation/<int:pk>/', views.deleteDesignation, name='delete-designation'),
 
     # for sheets
     path('all-employees/', views.allEmployees, name='all-employees'),
@@ -29,4 +31,10 @@ urlpatterns=[
     path('all-employee-salaryslips/', views.salarySlips, name='salary-slips'),
     path('all-sites/', views.allSites, name='all-sites'),
     path('all-clients/', views.allClients, name='all-clients'),
+
+    #for editing data from sheets
+    path('edit-all-employees/', views.editAllEmployees, name='edit-all-employees'),
+    path('edit-all-clients/', views.editAllClients, name='edit-all-clients'),
+    path('edit-all-sites/', views.editAllSites, name='edit-all-site'),
+    #path('edit-all-designations/', views.editAllDesignations, name='edit-all-designations')
 ]
