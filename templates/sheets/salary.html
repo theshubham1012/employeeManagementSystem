@@ -1,56 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>    
-    <h2>All Employees</h2>
-    <table border="1">
-        <thead>
-            <tr style="padding: 2px;">
-                <th>Employee ID</th>
-                <th>Name</th>
-                <th>Attendance</th>
-                <th>Designation</th>
-                <th>Basic Pay(a)</th>
-                <th>HRA(b)</th>
-                <th>Allowance(c)</th>
-                <th>Total(a+b+c)</th>
-                <th>PF(d)</th>
-                <th>ESI(e)</th>
-                <th>Deductions(d+e)</th>
-                <th>Net Salary(total-deductions)</th>
-                {% comment %} <th colspan="2">Actions</th> {% endcomment %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for employee in employees %}
-            <tr>
-                <td>{{ employee.employeeID }}</td>
-                <td>{{ employee.employeeName }}</td>
-                <td>{{ employee.salary.attendance }}</td>
-                <td>{{ employee.designation }}</td>
-                <td>{{ employee.salary.claculatedBasic }}</td>
-                <td>{{ employee.salary.calculatedHRA }}</td>
-                <td>{{ employee.salary.calculatedAllowance }}</td>
-                <td>{{ employee.salary.totalA }}</td>
-                <td>{{ employee.salary.calculatedPF }}</td>
-                <td>{{ employee.salary.calculatedESI}}</td>
-                <td>{{ employee.salary.deductions }}</td>
-                <td>{{ employee.salary.netPay }}</td>
-                {% comment %} <td><a href="#">Edit</a></td>
-                <td><a href="#">Delete</a></td> {% endcomment %}
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6">No salary records</td>
-            </tr>
-            {% endfor %}
-        </tbody>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="sheet-wrapper">
+
+  <div class="sheet-header">
+    <h2>All Employees — Payment Sheet</h2>
+    <button class="btn-print" onclick="window.print()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"/>
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+        <rect x="6" y="14" width="12" height="8"/>
+      </svg>
+      Print Sheet
+    </button>
+  </div>
+
+  <div class="table-scroll">
+    <table class="sheet-table">
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Attendance</th>
+          <th>Designation</th>
+          <th>Basic Pay (a)</th>
+          <th>HRA (b)</th>
+          <th>Allowance (c)</th>
+          <th>Total<br>(a+b+c)</th>
+          <th>PF (d)</th>
+          <th>ESI (e)</th>
+          <th>Deductions (d+e)</th>
+          <th>Net Salary</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for employee in employees %}
+        <tr>
+          <td>{{ employee.employeeID }}</td>
+          <td>{{ employee.employeeName }}</td>
+          <td>{{ employee.salary.attendance }}</td>
+          <td>{{ employee.designation }}</td>
+          <td>{{ employee.salary.calculatedBasic }}</td>
+          <td>{{ employee.salary.calculatedHRA }}</td>
+          <td>{{ employee.salary.calculatedAllowance }}</td>
+          <td>{{ employee.salary.totalA }}</td>
+          <td>{{ employee.salary.calculatedPF }}</td>
+          <td>{{ employee.salary.calculatedESI }}</td>
+          <td>{{ employee.salary.deductions }}</td>
+          <td>{{ employee.salary.netPay }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="12">No salary records found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
-    </div>
-</body>
-</html>
+  </div>
+
+</div>
+{% endblock %}

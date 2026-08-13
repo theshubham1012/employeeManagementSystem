@@ -1,31 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Employee-Management-Home</title>
-</head>
-<body>
-    <div>
-        <div class="logo"></div>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Mark Attendance</a></li>
-            <li><a href="#">Sheets</a>
-                <ul>
-                    <li><a href="#">Attendance Sheet</a></li>
-                    <li><a href="#">Salary Sheet</a></li>
-                    <li><a href="#">Salary Slip</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    {% block content %}
-    {% endblock content %}
+{% extends 'base.html' %}
+{% load static %}
 
-    <footer>
-        Developed by-Nexora
+{% block content %}
+<div class="dash">
+
+    <div class="dash-head">
+        <div>
+            <p class="eyebrow">Nexora Employee Management</p>
+            <h1>Workforce Dashboard</h1>
+        </div>
+        <div class="date">{% now "l, j F Y" %}</div>
+    </div>
+
+    <div class="quick">
+        <a href="{% url 'add-employee' %}">+ Add Employee</a>
+        <a href="{% url 'mark-attendance' %}">+ Mark Attendance</a>
+        <a href="{% url 'add-client' %}">+ Add Client</a>
+        <a href="{% url 'add-site' %}">+ Add Site</a>
+        <a href="{% url 'add-designation' %}">+ Add Designation</a>
+    </div>
+
+    <div class="modules">
+        <div class="module">
+            <h2>Employees</h2>
+            <ul>
+                <li><a href="{% url 'all-employees' %}">View all employees</a></li>
+                <li><a href="{% url 'add-employee' %}">Add employee</a></li>
+                <li><a href="{% url 'edit-all-employees' %}">Edit / delete employees</a></li>
+            </ul>
+        </div>
+        <div class="module">
+            <h2>Clients</h2>
+            <ul>
+                <li><a href="{% url 'all-clients' %}">View all clients</a></li>
+                <li><a href="{% url 'add-client' %}">Add client</a></li>
+                <li><a href="{% url 'edit-all-clients' %}">Edit / delete clients</a></li>
+            </ul>
+        </div>
+        <div class="module">
+            <h2>Sites</h2>
+            <ul>
+                <li><a href="{% url 'all-sites' %}">View all sites</a></li>
+                <li><a href="{% url 'add-site' %}">Add site</a></li>
+                <li><a href="{% url 'edit-all-site' %}">Edit / delete sites</a></li>
+            </ul>
+        </div>
+        <div class="module">
+            <h2>Designations</h2>
+            <ul>
+                <li><a href="{% url 'add-designation' %}">Add designation</a></li>
+                <li><a href="{% url 'edit-all-designations' %}">Edit / delete designations</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="reports">
+        <h2>Reports &amp; Sheets</h2>
+        <div class="grid">
+            <a href="{% url 'all-employees-salary' %}">Salary sheet</a>
+            <a href="{% url 'salary-slips' %}">Salary slips</a>
+            <a href="{% url 'all-employees' %}">Employee sheet</a>
+            <a href="{% url 'all-sites' %}">Site sheet</a>
+            <a href="{% url 'all-clients' %}">Client sheet</a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+by-Nexora
     </footer>
 </body>
 </html>

@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Nexora Employee Management{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+</head>
+<body>
+    <header>
+    <nav class="navbar">
+        <div class="logo"><span class="mark"></span>Employee Management</div>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'mark-attendance' %}">Mark Attendance</a></li>
+            <li>
+                <a href="#">Sheets</a>
+                <ul>
+                    <li><a href="{% url 'all-employees' %}">All Employees</a></li>
+                    <li><a href="{% url 'all-clients' %}">All Clients</a></li>
+                    <li><a href="{% url 'all-sites' %}">All Sites</a></li>
+                    <li><a href="{% url 'all-employees-salary' %}">Salary Sheet</a></li>
+                    <li><a href="{% url 'salary-slips' %}">Salary Slip</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Make Changes</a>
+                <ul>
+                    <li><a href="{% url 'edit-all-employees' %}">Edit Employees</a></li>
+                    <li><a href="{% url 'edit-all-clients' %}">Edit Clients</a></li>
+                    <li><a href="{% url 'edit-all-site' %}">Edit Sites</a></li>
+                    <li><a href="{% url 'edit-all-designations' %}">Edit Designations</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    </header>
+    {% block content %}
+    {% endblock content %}
+
+    <footer>Developed by — Nexora</footer>
+
+</body>
+</html>

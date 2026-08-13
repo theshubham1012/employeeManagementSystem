@@ -36,5 +36,5 @@ urlpatterns=[
     path('edit-all-employees/', views.editAllEmployees, name='edit-all-employees'),
     path('edit-all-clients/', views.editAllClients, name='edit-all-clients'),
     path('edit-all-sites/', views.editAllSites, name='edit-all-site'),
-    #path('edit-all-designations/', views.editAllDesignations, name='edit-all-designations')
+    path('edit-all-designations/', views.editAllDesignations, name='edit-all-designations')
 ]

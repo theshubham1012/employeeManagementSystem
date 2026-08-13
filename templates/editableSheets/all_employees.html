@@ -1,56 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>    
-    <h2>All Employees</h2>
-    <table border="1">
-        <thead>
-            <tr style="padding: 2px;">
-                <th>Employee ID</th>
-                <th>Name</th>
-                <th>Aadhar</th>
-                <th>Mobile</th>
-                <th>Account</th>
-                <th>AccountIFSC</th>
-                <th>Bank Name</th>
-                <th>Site Name</th>
-                <th>Designation</th>
-                <th>PAN</th>
-                <th>UAN</th>
-                <th>ESI</th>
-                <th colspan="2">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for employee in employees %}
-            <tr>
-                <td>{{ employee.employeeID }}</td>
-                <td>{{ employee.employeeName }}</td>
-                <td>{{ employee.aadhar }}</td>
-                <td>{{ employee.mobileNum }}</td>
-                <td>{{ employee.account }}</td>
-                <td>{{ employee.accountIFSC }}</td>
-                <td>{{ employee.accountName }}</td>
-                <td>{{ employee.siteName }}</td>
-                <td>{{ employee.designation }}</td>
-                <td>{{ employee.pan }}</td>
-                <td>{{ employee.uan}}</td>
-                <td>{{ employee.esi}}</td>
-                <td><a href="{% url "edit-employee" employee.employeeID %}">Edit</a></td>
-                <td><a href="{% url "delete-employee" employee.employeeID %}">Delete</a></td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6">No employees found</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% extends "base.html" %}
+{% block content %}
+<div class="sheet-page">
+ 
+    <div class="sheet-head">
+        <div>
+            <p class="eyebrow">Employees</p>
+            <h2>All Employees</h2>
+        </div>
+        <a class="add-btn" href="{% url 'add-employee' %}">+ Add Employee</a>
     </div>
-</body>
-</html>
+ 
+    <div class="table-card">
+            <table class="sheet-table">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Name</th>
+                        <th>Aadhar</th>
+                        <th>Mobile</th>
+                        <th>Account</th>
+                        <th>Account IFSC</th>
+                        <th>Bank Name</th>
+                        <th>Site Name</th>
+                        <th>Designation</th>
+                        <th>PAN</th>
+                        <th>UAN</th>
+                        <th>ESI</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                        <td>{{ employee.employeeID }}</td>
+                        <td>{{ employee.employeeName }}</td>
+                        <td>{{ employee.aadhar }}</td>
+                        <td>{{ employee.mobileNum }}</td>
+                        <td>{{ employee.account }}</td>
+                        <td>{{ employee.accountIFSC }}</td>
+                        <td>{{ employee.accountName }}</td>
+                        <td>{{ employee.siteName }}</td>
+                        <td>{{ employee.designation }}</td>
+                        <td>{{ employee.pan }}</td>
+                        <td>{{ employee.uan }}</td>
+                        <td>{{ employee.esi }}</td>
+                        <td>
+                            <a class="action-link edit" href="{% url 'edit-employee' employee.employeeID %}">Edit</a>
+                            <a class="action-link delete" href="{% url 'delete-employee' employee.employeeID %}">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td class="empty-row" colspan="14">No employees found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+ 
+</div>
+{% endblock content %}

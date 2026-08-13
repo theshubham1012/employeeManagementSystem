@@ -1,0 +1,45 @@
+{% extends "home.html" %}
+
+{% block content %}
+<div class="sheet-page">
+    <div class="sheet-head">
+        <div>
+            <p class="eyebrow">Designations</p>
+            <h2>All Designations</h2>
+        </div>
+        <a class="add-btn" href="{% url 'add-designation' %}">+ Add designation</a>
+    </div>
+
+    <div class="table-card">
+    <table class="sheet-table">
+        <thead>
+            <tr>
+                <th>Designation</th>
+                <th>Basic Pay</th>
+                <th>HRA</th>
+                <th>Allowance</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for designation in designations %}
+            <tr>
+                <td>{{ designation.designation }}</td>
+                <td>{{ designation.monthlyBasic }}</td>
+                <td>{{ designation.monthlyHRA }}</td>
+                <td>{{ designation.monthlyAllowance }}</td>
+                <td>
+                    <a class="action-link edit" href="{% url "delete-designation" designation.id %}">Delete</a>
+                    <a class="action-link delete" href="{% url "edit-designation" designation.id %}">Edit</a>
+                </td>
+            </tr>  
+            {% empty %}
+            <tr>
+                <td colspan="6">No designations added yet</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock content %}

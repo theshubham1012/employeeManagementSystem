@@ -16,7 +16,7 @@ def addEmployee(request):
             form.save()
         return redirect('all-employees') # redirect uses url name 'name'
     form = AddEmployeeForm()
-    return render(request, 'employee_registration_form.html', {'form': form})
+    return render(request, 'forms/employeeForms/employee_registration_form.html', {'form': form})
 
 def editEmployee(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
@@ -30,7 +30,7 @@ def editEmployee(request, pk):
         'form':form,
         'employee': employee
         }
-    return render(request, 'edit-employee.html',context)
+    return render(request, 'forms/employeeForms/edit-employee.html',context)
 
 def deleteEmployee(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
@@ -44,9 +44,9 @@ def addClient(request):
         form = ClientForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('addClient')
+        return redirect('all-clients')
     form = ClientForm()
-    return render(request,'add_client.html',{'form':form})
+    return render(request,'forms/clientForms/add_client.html',{'form':form})
 
 def editClient(request, pk):
     client = get_object_or_404(Client, pk=pk)
@@ -60,7 +60,7 @@ def editClient(request, pk):
         'form':form,
         'client':client,
     }
-    return render(request, 'edit-client.html', context)
+    return render(request, 'forms/clientForms/edit-client.html', context)
 
 def deleteClient(request, pk):
     client = get_object_or_404(Client, pk-pk)
@@ -77,7 +77,7 @@ def addSite(request):
             form.save()
         return redirect('all-sites')
     form = SiteForm()
-    return render(request, 'add-site.html',{'form':form,})
+    return render(request, 'forms/siteForms/add-site.html',{'form':form,})
 
 def editSite(request, pk):
     site = get_object_or_404(Site, pk=pk)
@@ -91,7 +91,7 @@ def editSite(request, pk):
         'form':form,
         'site':site,
     }
-    return render(request, 'edit-site.html', context)
+    return render(request, 'forms/siteForms/edit-site.html', context)
 
 def deleteSite(request, pk):
     site = get_object_or_404(Site, pk=pk)
@@ -105,10 +105,9 @@ def addDesignation(request):
         form = DesignationForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('addDesignation')
-
+        return redirect('edit-all-designations')
     form = DesignationForm()
-    return render(request, 'add-designation.html', {'form':form})
+    return render(request, 'forms/designationForms/add-designation.html', {'form':form})
 
 def editDesignation(request, pk):
     designation = get_object_or_404(Designation, pk=pk)
@@ -116,9 +115,9 @@ def editDesignation(request, pk):
         form = DesignationForm(request.POST, instance=designation)
         if form.is_valid():
             form.save()
-        #return redirect('')
+        return redirect('edit-all-designations')
     form = DesignationForm(instance=designation)
-    return render(request, 'edit-designation.html', {'form':form})
+    return render(request, 'forms/designationForms/edit-designation.html', {'form':form})
 
 def deleteDesignation(request, pk):
     designation = get_object_or_404(Designation, pk=pk)
@@ -185,11 +184,18 @@ def editAllEmployees(request):
 
 def editAllClients(request):
     clients = Client.objects.all()
-    return render(request, 'sheets/all-clients.html', {'clients':clients})
+    return render(request, 'editableSheets/all-clients.html', {'clients':clients})
 
 def editAllSites(request):
     clients = Client.objects.all().prefetch_related('sites')
     context = {
         'clients': clients,
     }
-    return render(request, 'sheets/all_site.html', context)
+    return render(request, 'editableSheets/all_site.html', context)
+
+def editAllDesignations(request):
+    designations = Designation.objects.all()
+    context={
+        'designations':designations,
+    }
+    return render(request,'editableSheets/all-designations.html', context)
